@@ -14,7 +14,7 @@ interface User {
   profilePicture?: string;
 }
 
-export default function CreatorDashboard() {
+export default function SponsorDashboard() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [, setLocation] = useLocation();
@@ -31,8 +31,8 @@ export default function CreatorDashboard() {
           const userData = await response.json();
           setUser(userData);
           
-          // If user is not a creator, redirect to the appropriate dashboard
-          if (userData.role !== 'creator') {
+          // If user is not a sponsor, redirect to the appropriate dashboard
+          if (userData.role !== 'sponsor') {
             setLocation(userData.role === 'influencer' ? '/influencer' : '/dashboard');
           }
         } else {
@@ -103,17 +103,17 @@ export default function CreatorDashboard() {
           <div className="text-center sm:text-left">
             <CardTitle className="text-2xl">{user.name}</CardTitle>
             <p className="text-gray-500">{user.email}</p>
-            <span className="inline-block px-3 py-1 mt-2 bg-teal-100 text-teal-800 rounded-full text-sm font-medium">
-              Creator
+            <span className="inline-block px-3 py-1 mt-2 bg-blue-100 text-blue-800 rounded-full text-sm font-medium">
+              Sponsor
             </span>
           </div>
         </CardHeader>
         <CardContent>
           <div className="space-y-6">
             <div className="border rounded-lg p-6 bg-white">
-              <h3 className="font-medium text-xl mb-4">Creator Dashboard</h3>
+              <h3 className="font-medium text-xl mb-4">Sponsor Dashboard</h3>
               <p className="text-gray-600 mb-4">
-                Welcome to your creator dashboard! Here you can manage your campaigns, find influencers, and track your marketing performance.
+                Welcome to your sponsor dashboard! Here you can manage your sponsorships, find influencers, and track your marketing performance.
               </p>
               
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">

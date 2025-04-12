@@ -17,7 +17,7 @@ interface SignupFormProps {
 // Extend the insertUserSchema to include confirmPassword, role, and terms
 const signupFormSchema = insertUserSchema.extend({
   confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
-  role: z.enum(["creator", "influencer"], {
+  role: z.enum(["sponsor", "influencer"], {
     required_error: "Please select a role"
   }),
   terms: z.boolean().refine(val => val === true, {
@@ -47,7 +47,7 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
       email: "",
       password: "",
       confirmPassword: "",
-      role: "creator",
+      role: "sponsor",
       terms: false
     }
   });
@@ -197,13 +197,13 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
           <div className="flex items-center">
             <input
               type="radio"
-              id="creator"
-              value="creator"
+              id="sponsor"
+              value="sponsor"
               {...register("role")}
               className="h-4 w-4 text-primary focus:ring-primary border-gray-300"
             />
-            <Label htmlFor="creator" className="ml-2 text-sm text-gray-700">
-              CREATOR
+            <Label htmlFor="sponsor" className="ml-2 text-sm text-gray-700">
+              SPONSOR
             </Label>
           </div>
           <div className="flex items-center">
