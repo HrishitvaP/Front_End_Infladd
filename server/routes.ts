@@ -61,7 +61,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(UPLOADS_DIR));
 
   // Registration endpoint
-  app.post('/api/register', upload.none(), async (req, res) => {
+  app.post('/api/register', express.json(), async (req, res) => {
     try {
       console.log('Registration body:', req.body);
       
@@ -100,7 +100,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Login endpoint
-  app.post('/api/login', async (req, res) => {
+  app.post('/api/login', express.json(), async (req, res) => {
     try {
       // Validate login data
       const loginData = loginUserSchema.parse(req.body);
