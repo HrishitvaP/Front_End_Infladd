@@ -1,6 +1,2 @@
 id,name,email,password,profile_picture,role
-1,trance,trance26@gmail.com,8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92,,admin
-2,riship,rishi@gmail.com,8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92,,creator
-3,Blah Black,blahblahblacksheep@gmail.com,839c3898223460841bd9c89fa5c8faac11d0db3b39c1df31496445fdc5bcc867,,creator
-4,Blah Sheep,blacksheepblahblah@gmail.com,839c3898223460841bd9c89fa5c8faac11d0db3b39c1df31496445fdc5bcc867,,influencer
-5,egg,egg@gmail.com,8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92,,creator
+6,rishi,rishi@gmail.com,8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92,,sponsor

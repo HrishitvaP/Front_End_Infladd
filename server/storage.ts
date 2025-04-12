@@ -16,6 +16,16 @@ if (!fs.existsSync(UPLOADS_DIR)) {
 // Create the CSV file with headers if it doesn't exist
 if (!fs.existsSync(USER_CSV_PATH)) {
   fs.writeFileSync(USER_CSV_PATH, 'id,name,email,password,profile_picture,role\n');
+} else {
+  // Check if the file has headers, add them if not
+  const data = fs.readFileSync(USER_CSV_PATH, 'utf8');
+  if (!data.startsWith('id,name,email,password,profile_picture,role')) {
+    // Backup existing data
+    const existingData = data.trim();
+    // Rewrite file with headers and existing data
+    fs.writeFileSync(USER_CSV_PATH, 'id,name,email,password,profile_picture,role\n' + existingData);
+    console.log('Added headers to existing users.csv file');
+  }
 }
 
 // Helper to hash passwords
