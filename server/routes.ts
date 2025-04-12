@@ -61,15 +61,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(UPLOADS_DIR));
 
   // Registration endpoint
-  app.post('/api/register', async (req, res) => {
+  app.post('/api/register', upload.none(), async (req, res) => {
     try {
+      console.log('Registration body:', req.body);
+      
       // Validate user data
       const userData = {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        profilePicture: undefined,
-        role: req.body.role
+        profilePicture: null,
+        role: req.body.role || 'creator' // Default to creator if no role provided
       };
       
       const validUserData = insertUserSchema.parse(userData);

@@ -54,18 +54,21 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
 
   const onSubmit = async (data: SignupFormData) => {
     setIsSubmitting(true);
+    console.log("Form submission data:", data);
     
     try {
-      // Create form data to send file
-      const formData = new FormData();
-      formData.append('name', data.name);
-      formData.append('email', data.email);
-      formData.append('password', data.password);
-      formData.append('role', data.role);
-      
+      // Create JSON data to send
       const response = await fetch('/api/register', {
         method: 'POST',
-        body: formData,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: data.name,
+          email: data.email,
+          password: data.password,
+          role: data.role
+        }),
         credentials: 'include'
       });
       

@@ -100,9 +100,12 @@ export class CsvStorage implements IStorage {
     // Create new user
     const hashedPassword = hashPassword(insertUser.password);
     const user: User = { 
-      ...insertUser, 
       id: this.currentId++,
-      password: hashedPassword 
+      name: insertUser.name,
+      email: insertUser.email,
+      password: hashedPassword,
+      profilePicture: insertUser.profilePicture || null,
+      role: insertUser.role
     };
     
     await appendToCsv(user);
@@ -153,9 +156,12 @@ export class MemStorage implements IStorage {
     const hashedPassword = hashPassword(insertUser.password);
     const id = this.currentId++;
     const user: User = { 
-      ...insertUser, 
       id,
-      password: hashedPassword 
+      name: insertUser.name,
+      email: insertUser.email,
+      password: hashedPassword,
+      profilePicture: insertUser.profilePicture || null,
+      role: insertUser.role
     };
     
     this.users.set(id, user);
