@@ -71,7 +71,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         email: req.body.email,
         password: req.body.password,
         profilePicture: null,
-        role: req.body.role || 'creator' // Default to creator if no role provided
+        role: req.body.role || 'sponsor' // Default to sponsor if no role provided
       };
       
       const validUserData = insertUserSchema.parse(userData);
