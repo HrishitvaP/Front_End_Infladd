@@ -61,16 +61,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.use('/uploads', express.static(UPLOADS_DIR));
 
   // Registration endpoint
-  app.post('/api/register', upload.single('profilePicture'), async (req, res) => {
+  app.post('/api/register', async (req, res) => {
     try {
-      const profilePicturePath = req.file ? `/uploads/${req.file.filename}` : undefined;
-      
       // Validate user data
       const userData = {
         name: req.body.name,
         email: req.body.email,
         password: req.body.password,
-        profilePicture: profilePicturePath
+        profilePicture: undefined,
+        role: req.body.role
       };
       
       const validUserData = insertUserSchema.parse(userData);
@@ -116,7 +115,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         id: user.id,
         name: user.name,
         email: user.email,
-        profilePicture: user.profilePicture
+        profilePicture: user.profilePicture,
+        role: user.role
       };
       
       // Return user info without password

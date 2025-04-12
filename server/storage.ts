@@ -15,7 +15,7 @@ if (!fs.existsSync(UPLOADS_DIR)) {
 
 // Create the CSV file with headers if it doesn't exist
 if (!fs.existsSync(USER_CSV_PATH)) {
-  fs.writeFileSync(USER_CSV_PATH, 'id,name,email,password,profile_picture\n');
+  fs.writeFileSync(USER_CSV_PATH, 'id,name,email,password,profile_picture,role\n');
 }
 
 // Helper to hash passwords
@@ -52,7 +52,7 @@ const readCsv = async (): Promise<User[]> => {
 
 // Helper to write to CSV
 const appendToCsv = async (user: User): Promise<void> => {
-  const line = `${user.id},${user.name},${user.email},${user.password},${user.profilePicture || ''}\n`;
+  const line = `${user.id},${user.name},${user.email},${user.password},${user.profilePicture || ''},${user.role}\n`;
   await fs.promises.appendFile(USER_CSV_PATH, line);
 };
 
