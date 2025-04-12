@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -8,8 +8,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { Loader2, Upload } from "lucide-react";
-import { FileInput } from "@/components/ui/file-input";
+import { Loader2 } from "lucide-react";
 
 interface SignupFormProps {
   onSwitchForm: () => void;
@@ -30,8 +29,6 @@ type SignupFormData = z.infer<typeof signupFormSchema>;
 
 export default function SignupForm({ onSwitchForm }: SignupFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [previewUrl, setPreviewUrl] = useState<string | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
   const { toast } = useToast();
   
   const {
@@ -50,16 +47,6 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
       terms: false
     }
   });
-  
-  // For file input reference and preview
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Create a preview URL
-      const url = URL.createObjectURL(file);
-      setPreviewUrl(url);
-    }
-  };
 
   const onSubmit = async (data: SignupFormData) => {
     setIsSubmitting(true);
@@ -70,11 +57,6 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
       formData.append('name', data.name);
       formData.append('email', data.email);
       formData.append('password', data.password);
-      
-      // Add profile picture if exists
-      if (fileInputRef.current?.files?.[0]) {
-        formData.append('profilePicture', fileInputRef.current.files[0]);
-      }
       
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -108,30 +90,7 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
-      {/* Profile Picture Upload */}
-      <div className="flex flex-col items-center mb-4">
-        <div 
-          className={`profile-upload-preview w-24 h-24 rounded-full bg-gray-200 border-2 border-primary mb-2 flex items-center justify-center overflow-hidden`}
-          style={previewUrl ? { backgroundImage: `url('${previewUrl}')` } : undefined}
-        >
-          {!previewUrl && (
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-            </svg>
-          )}
-        </div>
-        
-        <label className="flex items-center justify-center px-4 py-2 bg-white border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50 transition-colors text-sm font-medium text-gray-700">
-          <Upload className="h-4 w-4 mr-2 text-gray-500" />
-          Upload Photo
-          <FileInput 
-            ref={fileInputRef}
-            accept="image/*"
-            onChange={handleFileChange}
-            className="hidden"
-          />
-        </label>
-      </div>
+
 
       {/* Full Name Input */}
       <div className="relative form-input-container">

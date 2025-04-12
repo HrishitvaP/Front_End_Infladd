@@ -13,7 +13,7 @@ export default function LoginPage() {
           {/* Logo Area */}
           <div className="text-center mb-6">
             <h1 className="text-2xl font-semibold text-gray-800">
-              <span className="text-primary">Secure</span>Login
+              <span className="text-primary">Infl</span>add
             </h1>
             <p className="text-gray-500 text-sm mt-1">
               {activeForm === 'login' 
@@ -35,7 +35,7 @@ export default function LoginPage() {
         {/* Footer */}
         <div className="mt-6 text-center">
           <p className="text-sm text-gray-500">
-            © {new Date().getFullYear()} SecureLogin. All rights reserved.
+            © {new Date().getFullYear()} Infladd. All rights reserved.
           </p>
         </div>
       </div>
