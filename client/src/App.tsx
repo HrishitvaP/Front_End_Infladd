@@ -6,7 +6,7 @@ import NotFound from "@/pages/not-found";
 import LoginPage from "@/pages/LoginPage";
 import Dashboard from "@/pages/Dashboard";
 import InfluencerDashboard from "@/pages/InfluencerDashboard";
-import CreatorDashboard from "@/pages/CreatorDashboard";
+import SponsorDashboard from "@/pages/SponsorDashboard";
 import { useEffect, useState } from "react";
 
 function Router() {
@@ -29,8 +29,8 @@ function Router() {
           if (location === '/') {
             if (userData.role === 'influencer') {
               setLocation('/influencer');
-            } else if (userData.role === 'creator') {
-              setLocation('/creator');
+            } else if (userData.role === 'sponsor') {
+              setLocation('/sponsor');
             } else {
               setLocation('/dashboard');
             }
@@ -38,12 +38,12 @@ function Router() {
           
           // Redirect to correct dashboard if user tries to access wrong one
           if ((location === '/influencer' && userData.role !== 'influencer') ||
-              (location === '/creator' && userData.role !== 'creator') ||
-              (location === '/dashboard' && (userData.role === 'influencer' || userData.role === 'creator'))) {
+              (location === '/sponsor' && userData.role !== 'sponsor') ||
+              (location === '/dashboard' && (userData.role === 'influencer' || userData.role === 'sponsor'))) {
             if (userData.role === 'influencer') {
               setLocation('/influencer');
-            } else if (userData.role === 'creator') {
-              setLocation('/creator');
+            } else if (userData.role === 'sponsor') {
+              setLocation('/sponsor');
             } else {
               setLocation('/dashboard');
             }
@@ -51,7 +51,7 @@ function Router() {
         } else {
           setIsAuthenticated(false);
           // If user is not authenticated and trying to access protected routes, redirect to login
-          if (location === '/dashboard' || location === '/influencer' || location === '/creator') {
+          if (location === '/dashboard' || location === '/influencer' || location === '/sponsor') {
             setLocation('/');
           }
         }
@@ -73,7 +73,7 @@ function Router() {
       <Route path="/" component={LoginPage} />
       <Route path="/dashboard" component={Dashboard} />
       <Route path="/influencer" component={InfluencerDashboard} />
-      <Route path="/creator" component={CreatorDashboard} />
+      <Route path="/sponsor" component={SponsorDashboard} />
       <Route component={NotFound} />
     </Switch>
   );
