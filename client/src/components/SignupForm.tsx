@@ -14,9 +14,12 @@ interface SignupFormProps {
   onSwitchForm: () => void;
 }
 
-// Extend the insertUserSchema to include confirmPassword and terms
+// Extend the insertUserSchema to include confirmPassword, role, and terms
 const signupFormSchema = insertUserSchema.extend({
   confirmPassword: z.string().min(6, "Password must be at least 6 characters"),
+  role: z.enum(["creator", "influencer"], {
+    required_error: "Please select a role"
+  }),
   terms: z.boolean().refine(val => val === true, {
     message: "You must agree to the terms and conditions"
   })
@@ -44,6 +47,7 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
       email: "",
       password: "",
       confirmPassword: "",
+      role: "creator",
       terms: false
     }
   });
@@ -57,6 +61,7 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
       formData.append('name', data.name);
       formData.append('email', data.email);
       formData.append('password', data.password);
+      formData.append('role', data.role);
       
       const response = await fetch('/api/register', {
         method: 'POST',
@@ -180,6 +185,44 @@ export default function SignupForm({ onSwitchForm }: SignupFormProps) {
         )}
       </div>
 
+      {/* Role Selection */}
+      <div className="mb-4">
+        <Label className="text-sm font-medium text-gray-700 mb-2 block">
+          What is your role?
+        </Label>
+        <div className="flex space-x-6 mt-2">
+          <div className="flex items-center">
+            <input
+              type="radio"
+              id="creator"
+              value="creator"
+              {...register("role")}
+              className="h-4 w-4 text-primary focus:ring-primary border-gray-300"
+            />
+            <Label htmlFor="creator" className="ml-2 text-sm text-gray-700">
+              CREATOR
+            </Label>
+          </div>
+          <div className="flex items-center">
+            <input
+              type="radio"
+              id="influencer"
+              value="influencer"
+              {...register("role")}
+              className="h-4 w-4 text-primary focus:ring-primary border-gray-300"
+            />
+            <Label htmlFor="influencer" className="ml-2 text-sm text-gray-700">
+              INFLUENCER
+            </Label>
+          </div>
+        </div>
+        {errors.role && (
+          <div className="text-red-500 text-xs mt-1">
+            {errors.role.message}
+          </div>
+        )}
+      </div>
+      
       {/* Terms and Conditions */}
       <div className="flex items-start space-x-2">
         <Checkbox
