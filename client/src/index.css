@@ -1,0 +1,34 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gradient-to-b from-gray-50 to-gray-100 min-h-screen text-foreground;
+  }
+
+  .glass-effect {
+    @apply bg-white/65 backdrop-blur-md border border-white/20;
+  }
+
+  .emboss-effect {
+    @apply shadow-[0_2px_4px_rgba(0,0,0,0.025),0_8px_16px_rgba(0,0,0,0.05),0_16px_32px_rgba(0,0,0,0.07),0_-1px_2px_rgba(255,255,255,0.7)_inset];
+  }
+
+  .form-input-float:focus ~ .input-label,
+  .form-input-float:not(:placeholder-shown) ~ .input-label {
+    @apply transform -translate-y-5 scale-75 text-primary;
+  }
+
+  .form-input-container:focus-within {
+    @apply ring-2 ring-primary/20 border-primary;
+  }
+
+  .profile-upload-preview {
+    @apply bg-cover bg-center bg-no-repeat;
+  }
+}
